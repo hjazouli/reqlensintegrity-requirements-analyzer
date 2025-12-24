@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrity Requirements Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Requirements Analyzer</span>
+                </div>
+                <nav class="nav">
+                    <button class="btn btn-secondary" onclick="exportData()">
+                        <i class="fas fa-download"></i> Export CSV
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="card glass-card">
+                    <h2 class="section-title">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        Load Requirements Files
+                    </h2>
+                    
+                    <div class="upload-grid">
+                        <!-- Current File Upload -->
+                        <div class="upload-box">
+                            <label class="upload-label">
+                                <i class="fas fa-file-excel"></i>
+                                <span class="upload-title">Current Requirements File</span>
+                                <span class="upload-subtitle">Click to browse or drag & drop</span>
+                                <input type="file" id="currentFile" accept=".xlsx,.xls" onchange="handleFileUpload(this, 'current')" hidden>
+                            </label>
+                            <div class="upload-status" id="currentStatus"></div>
+                        </div>
+
+                        <!-- Comparison File Upload -->
+                        <div class="upload-box">
+                            <label class="upload-label">
+                                <i class="fas fa-file-alt"></i>
+                                <span class="upload-title">Comparison File (Optional)</span>
+                                <span class="upload-subtitle">For change detection</span>
+                                <input type="file" id="comparisonFile" accept=".xlsx,.xls" onchange="handleFileUpload(this, 'comparison')" hidden>
+                            </label>
+                            <div class="upload-status" id="comparisonStatus"></div>
+                        </div>
+                    </div>
+
+                    <div class="analyze-section">
+                        <button class="btn btn-primary btn-large" id="analyzeBtn" onclick="performAnalysis()" disabled>
+                            <i class="fas fa-chart-line"></i>
+                            Analyze Requirements
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tabs Navigation -->
+            <div class="tabs" id="tabsSection" style="display: none;">
+                <button class="tab active" onclick="switchTab('overview')">
+                    <i class="fas fa-chart-pie"></i> Overview
+                </button>
+                <button class="tab" onclick="switchTab('changes')">
+                    <i class="fas fa-exchange-alt"></i> Changes
+                </button>
+                <button class="tab" onclick="switchTab('impact')">
+                    <i class="fas fa-exclamation-triangle"></i> Impact Analysis
+                </button>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="tabContent" style="display: none;">
+                <!-- Overview Tab -->
+                <div class="tab-pane active" id="overview-tab">
+                    <div class="card glass-card">
+                        <h2 class="section-title">
+                            <i class="fas fa-chart-bar"></i>
+                            Overview Dashboard
+                        </h2>
+                        
+                        <!-- Metrics Grid -->
+                        <div class="metrics-grid" id="metricsGrid"></div>
+                        
+                        <!-- Charts Grid -->
+                        <div class="charts-grid">
+                            <div class="chart-container">
+                                <div id="categoryChart"></div>
+                            </div>
+                            <div class="chart-container">
+                                <div id="stateChart"></div>
+                            </div>
+                            <div class="chart-container full-width">
+                                <div id="sectionChart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Changes Tab -->
+                <div class="tab-pane" id="changes-tab">
+                    <div class="card glass-card">
+                        <h2 class="section-title">
+                            <i class="fas fa-list"></i>
+                            Changed Requirements
+                        </h2>
+                        <div class="table-container" id="changesTable"></div>
+                    </div>
+                </div>
+
+                <!-- Impact Tab -->
+                <div class="tab-pane" id="impact-tab">
+                    <div class="card glass-card">
+                        <h2 class="section-title">
+                            <i class="fas fa-tachometer-alt"></i>
+                            Impact Analysis
+                        </h2>
+                        
+                        <!-- Impact Metrics -->
+                        <div class="impact-metrics" id="impactMetrics"></div>
+                        
+                        <!-- Impact Chart -->
+                        <div class="chart-container">
+                            <div id="impactChart"></div>
+                        </div>
+                        
+                        <!-- Affected Items -->
+                        <div class="affected-items" id="affectedItems"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p class="loading-text">Processing...</p>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
