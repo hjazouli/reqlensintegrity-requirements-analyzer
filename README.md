@@ -1,4 +1,4 @@
-# Integrity Requirements Analyzer - Web Application 🚀
+## Integrity Requirements Analyzer - Web Application 
 
 A modern, beautiful web application for analyzing system integrity requirements from Excel files, detecting changes between versions, and performing impact analysis.
 
@@ -6,7 +6,7 @@ A modern, beautiful web application for analyzing system integrity requirements 
 ![Python](https://img.shields.io/badge/python-3.8+-green)
 ![License](https://img.shields.io/badge/license-MIT-orange)
 
-## ✨ Features
+## Features
 
 - 🎨 **Modern UI** - Beautiful glassmorphism design with smooth animations
 - 📊 **Interactive Charts** - Dynamic visualizations using Plotly
@@ -17,7 +17,7 @@ A modern, beautiful web application for analyzing system integrity requirements 
 - 📱 **Responsive** - Works on desktop, tablet, and mobile
 - ⚡ **Fast** - Handles 3,000+ requirements instantly
 
-## 🎯 Quick Start
+## Quick Start
 
 ### 1. Install Dependencies
 ```bash
@@ -34,7 +34,7 @@ Navigate to: **http://localhost:5000**
 
 That's it! 🎉
 
-## 📖 How to Use
+## How to Use
 
 ### Step 1: Load Files
 1. **Current Requirements File** (Required)
